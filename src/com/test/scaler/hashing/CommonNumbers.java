@@ -6,25 +6,37 @@ import java.util.stream.IntStream;
 
 public class CommonNumbers {
     public static void main(String[] args) {
-        int[] arrA = {2, 1, 4, 10};
-        int[] arrB = {3, 6, 2, 10, 10};
-        Map<Integer, Integer> map = new TreeMap<>();
-        for (int i = 0; i < arrA.length; i++) {
-//            if (map.containsKey(arrA[i])) map.put(arrA[i], map.get(arrA[i] + 1));
-            map.put(arrA[i], arrA[i]);
-        }
-
+        int[] arrA = {1, 2, 2, 1};//
+        int[] arrB = {2, 3, 1, 2};
+        Map<Integer, Integer> comFrMap = new HashMap<>();
+        for (int i = 0; i < arrA.length; i++)
+            comFrMap.put(arrA[i], comFrMap.get(arrA[i]) != null ? comFrMap.get(arrA[i]) + 1 : 1);
         List<Integer> comList = new ArrayList<>();
         for (int j = 0; j < arrB.length; j++) {
-            Integer commonVal = map.get(arrB[j]);
-            System.out.println("common ->" + commonVal + " fr ->" + arrB[j]);
-            if (commonVal != null) {
-                System.out.println("common ->" + commonVal);
-                comList.add(commonVal);
+            Integer num = comFrMap.get(arrB[j]);
+            if (num != null && num > 0) {
+                comList.add(arrB[j]);
+                comFrMap.put(arrB[j], num - 1);
             }
         }
-//        Collections.sort(comList);
-        System.out.println("sorted -->" + comList);
+        Collections.sort(comList);
+//        comList.stream().filter(p -> {
+//            System.out.println(p);
+//            return true;
+//        });
+        System.out.println("comList -->" + comList + " tree Map -->" + comFrMap);
 
     }
 }
+
+//    public void doSomething(List<Person> persons) {
+//
+//        persons.stream().filter(p -> {
+//            System.out.println(p);
+//            return true;
+//        });
+//    }
+//
+//    main() {
+//        doSomething(personsList);
+//    }
